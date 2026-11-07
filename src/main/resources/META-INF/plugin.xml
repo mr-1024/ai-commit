@@ -1,0 +1,31 @@
+<idea-plugin>
+    <id>io.github.mr1024.ai-commit</id>
+    <name>AI Commit Message</name>
+    <version>2.0.0</version>
+    <idea-version since-build="253" until-build="253.*"/>
+    <vendor>zouxiuhui</vendor>
+    <description><![CDATA[
+    在提交面板的提交信息输入框上方提供「AI 生成提交信息」按钮：收集勾选文件的 diff，
+    调用本机命令行工具（默认 claude）生成符合 Conventional Commits 规范的中文提交信息并回填输入框。
+    生成命令可在 Settings | Tools | AI Commit Message 中修改。
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <actions>
+        <action id="AiCommit.GenerateMessage"
+                class="io.github.mr1024.aicommit.GenerateCommitMessageAction"
+                text="AI 生成提交信息"
+                description="基于勾选文件 diff 用本地 CLI 生成 Conventional Commits 提交信息">
+            <add-to-group group-id="Vcs.MessageActionGroup" anchor="first"/>
+        </action>
+    </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="AI Commit" displayType="BALLOON"/>
+        <applicationConfigurable parentId="tools"
+                                 id="aiCommit"
+                                 displayName="AI Commit Message"
+                                 instance="io.github.mr1024.aicommit.AiCommitSettings"/>
+    </extensions>
+</idea-plugin>
